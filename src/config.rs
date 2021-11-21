@@ -24,8 +24,9 @@ pub enum Error {
 impl Config {
 	pub fn load() -> Result<Self, Error> {
 		let config_path = config_path();
-		let config: String = fs::read_to_string(config_path)?;
+		let config: String = fs::read_to_string(&config_path)?;
 		let config: Config = toml::from_str(&config)?;
+        println!("Config path: \"{}\"", config_path.display());
 		Ok(config)
 	}
 }
@@ -36,7 +37,14 @@ fn config_path() -> PathBuf {
 			let mut path = PathBuf::from(file_path);
 			path.pop(); // Pop the binary name
 			path.push(CONFIG_PATH);
-			path
+
+			if path.exists() {
+				path
+			} else {
+				// If the path doesn't exist, fall back to just the filename, meaning, use the
+				// current working directory
+				PathBuf::from(CONFIG_PATH)
+			}
 		}
 		None => PathBuf::from(CONFIG_PATH),
 	}
