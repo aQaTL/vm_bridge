@@ -1776,6 +1776,7 @@ dependencies = [
  "toml",
  "ureq",
  "url",
+ "winapi 0.3.9",
 ]
 
 [[package]]

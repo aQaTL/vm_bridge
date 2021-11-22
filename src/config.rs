@@ -8,44 +8,44 @@ const CONFIG_PATH: &str = "config.toml";
 
 #[derive(Deserialize)]
 pub struct Config {
-	pub host_ip: IpAddr,
-	pub vm_ip: IpAddr,
-	pub port: u16,
+    pub host_ip: IpAddr,
+    pub vm_ip: IpAddr,
+    pub port: u16,
 }
 
 #[derive(Debug, Error)]
 pub enum Error {
-	#[error("{self:?}")]
-	Io(#[from] std::io::Error),
-	#[error("{self:?}")]
-	Deserialize(#[from] toml::de::Error),
+    #[error("{self:?}")]
+    Io(#[from] std::io::Error),
+    #[error("{self:?}")]
+    Deserialize(#[from] toml::de::Error),
 }
 
 impl Config {
-	pub fn load() -> Result<Self, Error> {
-		let config_path = config_path();
-		let config: String = fs::read_to_string(&config_path)?;
-		let config: Config = toml::from_str(&config)?;
+    pub fn load() -> Result<Self, Error> {
+        let config_path = config_path();
+        let config: String = fs::read_to_string(&config_path)?;
+        let config: Config = toml::from_str(&config)?;
         println!("Config path: \"{}\"", config_path.display());
-		Ok(config)
-	}
+        Ok(config)
+    }
 }
 
 fn config_path() -> PathBuf {
-	match std::env::args().next() {
-		Some(file_path) => {
-			let mut path = PathBuf::from(file_path);
-			path.pop(); // Pop the binary name
-			path.push(CONFIG_PATH);
+    match std::env::args().next() {
+        Some(file_path) => {
+            let mut path = PathBuf::from(file_path);
+            path.pop(); // Pop the binary name
+            path.push(CONFIG_PATH);
 
-			if path.exists() {
-				path
-			} else {
-				// If the path doesn't exist, fall back to just the filename, meaning, use the
-				// current working directory
-				PathBuf::from(CONFIG_PATH)
-			}
-		}
-		None => PathBuf::from(CONFIG_PATH),
-	}
+            if path.exists() {
+                path
+            } else {
+                // If the path doesn't exist, fall back to just the filename, meaning, use the
+                // current working directory
+                PathBuf::from(CONFIG_PATH)
+            }
+        }
+        None => PathBuf::from(CONFIG_PATH),
+    }
 }
