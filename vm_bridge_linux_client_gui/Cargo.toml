@@ -10,17 +10,11 @@ license = "MIT"
 vm_bridge = { path = "../vm_bridge" }
 
 anyhow = "1.0.47"
-thiserror = "1.0.30"
-pico-args = "0.4.2"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.71"
 toml = "0.5.8"
-actix-web = "3.3.2"
-actix-rt = "2.5.0"
 url = "2.2.2"
-ureq = { version = "2.3.1", features = ["json"] }
 flexi_logger = "0.21.0"
 log = "0.4.14"
-
-[target.'cfg(windows)'.dependencies]
-winapi = { version = "0.3", features = ["shellapi", "winuser" ] }
+iced = { version = "0.3.0", features = ["tokio"] }
+reqwest = { version = "0.11.7", features = ["json"] }
