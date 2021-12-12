@@ -1,24 +1,9 @@
-[package]
-name = "vm_bridge"
-version = "0.1.0"
-edition = "2021"
-license = "MIT"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-anyhow = "1.0.47"
-thiserror = "1.0.30"
-pico-args = "0.4.2"
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0.71"
-toml = "0.5.8"
-actix-web = "3.3.2"
-actix-rt = "2.5.0"
-url = "2.2.2"
-ureq = { version = "2.3.1", features = ["json"] }
-flexi_logger = "0.21.0"
-log = "0.4.14"
-
-[target.'cfg(windows)'.dependencies]
-winapi = { version = "0.3", features = ["shellapi", "winuser" ] }
+[workspace]
+members = [
+    "vm_bridge",
+    "vm_bridge_client",
+    "vm_bridge_server",
+    "vm_bridge_linux_client",
+    "vm_bridge_linux_server",
+    "vm_bridge_linux_client_gui",
+]
