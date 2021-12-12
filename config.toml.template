@@ -1,3 +1,11 @@
 host_ip = "192.168.56.1"
 vm_ip = "192.168.56.104"
 port = 12419
+
+[env]
+DISPLAY = ":0"
+TEST_ENV = "this is a test env var"
+
+[vm_apps]
+gvim = "/usr/bin/gvim"
+
