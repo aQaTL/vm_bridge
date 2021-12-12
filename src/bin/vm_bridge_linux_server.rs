@@ -4,11 +4,11 @@
 extern crate actix_web;
 extern crate vm_bridge;
 
-use actix_web::middleware::Logger;
+use actix_web::middleware::{Compress, Logger};
 use actix_web::{get, post, web, App, HttpRequest, HttpResponse, HttpServer, Responder};
-use serde::Deserialize;
 use std::process::Command;
 use vm_bridge::config::Config;
+use vm_bridge::models::OpenApp;
 
 fn main() -> anyhow::Result<()> {
 	flexi_logger::Logger::try_with_env_or_str("info")?.start()?;
@@ -20,6 +20,7 @@ fn main() -> anyhow::Result<()> {
 	actix_web::rt::System::new("main").block_on(async move {
 		HttpServer::new(move || {
 			App::new()
+				.wrap(Compress::default())
 				.wrap(Logger::default())
 				.app_data(config)
 				.service(get_apps_service)
@@ -54,11 +55,6 @@ async fn open_app_service(req: HttpRequest, app: web::Json<OpenApp>) -> impl Res
 	} else {
 		Some(":(")
 	}
-}
-
-#[derive(Deserialize, serde::Serialize)]
-struct OpenApp {
-	app: String,
 }
 
 #[cfg(test)]

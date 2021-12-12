@@ -13,9 +13,12 @@ pub struct Config {
 	pub host_ip: IpAddr,
 	pub vm_ip: IpAddr,
 	pub port: u16,
-	pub env: HashMap<String, String>,
-	pub vm_apps: HashMap<String, PathBuf>,
+	pub env: EnvMap,
+	pub vm_apps: VmAppsMap,
 }
+
+pub type EnvMap = HashMap<String, String>;
+pub type VmAppsMap = HashMap<String, PathBuf>;
 
 #[derive(Debug, Error)]
 pub enum Error {

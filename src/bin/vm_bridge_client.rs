@@ -4,7 +4,7 @@ use anyhow::bail;
 use std::env;
 
 use vm_bridge::config::Config;
-use vm_bridge::OpenUrl;
+use vm_bridge::models;
 
 const OPEN_URL: &str = "open_url";
 
@@ -16,7 +16,7 @@ fn main() -> anyhow::Result<()> {
 		bail!("No arguments provided");
 	}
 
-	let open_url_payload = OpenUrl {
+	let open_url_payload = models::OpenUrl {
 		url: args[0].clone(),
 	};
 	let open_url_payload_json = serde_json::to_value(open_url_payload)?;

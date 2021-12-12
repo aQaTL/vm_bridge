@@ -1,11 +1,5 @@
-use serde::{Deserialize, Serialize};
 use std::io;
 use url::Url;
-
-#[derive(Serialize, Deserialize)]
-pub struct OpenUrl {
-	pub url: String,
-}
 
 #[cfg(target_os = "linux")]
 pub fn open_url(url: Url) -> io::Result<()> {

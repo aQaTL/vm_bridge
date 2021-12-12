@@ -12,6 +12,7 @@ use std::future::Ready;
 use thiserror::Error;
 use url::Url;
 use vm_bridge::config::Config;
+use vm_bridge::models;
 
 fn main() -> anyhow::Result<()> {
 	let config = Config::load()?;
@@ -67,7 +68,7 @@ impl Responder for Okay {
 }
 
 #[post("/open_url")]
-async fn open_url_service(url: web::Json<vm_bridge::OpenUrl>) -> Result<Okay, OpenUrlError> {
+async fn open_url_service(url: web::Json<models::OpenUrl>) -> Result<Okay, OpenUrlError> {
 	let url = Url::parse(&url.url)?;
 	web::block(move || vm_bridge::open_url(url))
 		.await
