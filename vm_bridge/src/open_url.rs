@@ -19,8 +19,9 @@ pub fn open_url(url: Url) -> io::Result<()> {
 #[cfg(target_os = "windows")]
 pub fn open_url(url: Url) -> io::Result<()> {
 	use std::{mem, ptr};
+	use std::iter::once;
 
-	let url_utf16: Vec<u16> = url.as_str().encode_utf16().collect();
+	let url_utf16: Vec<u16> = url.as_str().encode_utf16().chain(once(0u16)).collect();
 
 	let result = unsafe {
 		let result = winapi::um::shellapi::ShellExecuteW(
