@@ -39,8 +39,18 @@ impl Config {
 }
 
 fn config_path() -> PathBuf {
+	#[cfg(not(unix))]
 	if let Some(file_path) = std::env::args().next() {
 		let mut path = PathBuf::from(file_path);
+		path.pop(); // Pop the binary name
+		path.push(CONFIG_PATH);
+
+		if path.exists() {
+			return path;
+		}
+	}
+	#[cfg(unix)]
+	if let Ok(mut path) = std::fs::read_link("/proc/self/exe") {
 		path.pop(); // Pop the binary name
 		path.push(CONFIG_PATH);
 
